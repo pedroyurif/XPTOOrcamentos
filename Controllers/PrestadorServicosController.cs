@@ -80,12 +80,15 @@ namespace XPTOOrcamentos.Controllers
                         prestadorServico.Ativo = true;
                         _context.Add(prestadorServico);
                         await _context.SaveChangesAsync();
+                        TempData["msg"] = "<script>alert('Prestador criado!');</script>";
+
                         return RedirectToAction(nameof(Index));
                     }
                     return View(prestadorServico);
                 }
                 else
                 {
+                    TempData["msg"] = "<script>alert('Já possui um Prestador com este CPF!');</script>";
                     return RedirectToAction(nameof(Index));
                 }
             }
@@ -136,6 +139,7 @@ namespace XPTOOrcamentos.Controllers
                     }
                     catch (DbUpdateConcurrencyException)
                     {
+                        TempData["msg"] = "<script>alert('Houve um problema, entre em contato com o suporte!');</script>";
                         if (!PrestadorServicoExists(prestadorServico.ID))
                         {
                             return NotFound();
