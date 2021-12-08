@@ -1,0 +1,77 @@
+﻿@model IEnumerable<XPTOOrcamentos.Models.OrdemServico>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Ordens de Serviço</h2>
+<br />
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-3">
+            <input class="form-control" type="text" id="myInput" onkeyup="myFunction()" placeholder="Filtro">
+        </div>
+        <div class="col-7"></div>
+        <div class="col-2">
+            <p>
+                <a asp-action="Create">Nova Ordem</a>
+            </p>
+        </div>
+    </div>
+</div>
+<br />
+<table class="table" id="myTable">
+    <thead>
+        <tr>
+            <th>
+                Nº da OS
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TituloServico)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cliente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Prestador)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataExecucao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Valor)
+            </th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TituloServico)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cliente.Nome) - @Html.DisplayFor(modelItem => item.Cliente.CNPJ)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Prestador.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataExecucao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Valor)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">Editar</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">Excluir</a> 
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
