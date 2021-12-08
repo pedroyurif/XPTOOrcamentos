@@ -31,6 +31,7 @@ namespace XPTOOrcamentos.Controllers
         {
             if (id == null)
             {
+                TempData["msg"] = BaseModel.RetornaErro();
                 return NotFound();
             }
 
@@ -79,12 +80,14 @@ namespace XPTOOrcamentos.Controllers
         {
             if (id == null)
             {
+                TempData["msg"] = BaseModel.RetornaErro();
                 return NotFound();
             }
 
             var ordemServico = await _context.OrdensServico.FindAsync(id);
             if (ordemServico == null)
             {
+                TempData["msg"] = BaseModel.RetornaErro();
                 return NotFound();
             }
             ViewData["ClienteID"] = new SelectList(_context.Clientes.Where(w => w.Ativo), "ID", "Nome", ordemServico.ClienteID);
@@ -101,6 +104,7 @@ namespace XPTOOrcamentos.Controllers
         {
             if (id != ordemServico.ID)
             {
+                TempData["msg"] = BaseModel.RetornaErro();
                 return NotFound();
             }
 
@@ -117,6 +121,7 @@ namespace XPTOOrcamentos.Controllers
                 {
                     if (!OrdemServicoExists(ordemServico.ID))
                     {
+                        TempData["msg"] = BaseModel.RetornaErro();
                         return NotFound();
                     }
                     else
@@ -136,6 +141,7 @@ namespace XPTOOrcamentos.Controllers
         {
             if (id == null)
             {
+                TempData["msg"] = BaseModel.RetornaErro();
                 return NotFound();
             }
 
@@ -145,6 +151,7 @@ namespace XPTOOrcamentos.Controllers
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (ordemServico == null)
             {
+                TempData["msg"] = BaseModel.RetornaErro();
                 return NotFound();
             }
 
@@ -159,6 +166,7 @@ namespace XPTOOrcamentos.Controllers
             var ordemServico = await _context.OrdensServico.FindAsync(id);
             _context.OrdensServico.Remove(ordemServico);
             await _context.SaveChangesAsync();
+            TempData["msg"] = "<script>alert('Ordem de serviço excluída!');</script>";
             return RedirectToAction(nameof(Index));
         }
 

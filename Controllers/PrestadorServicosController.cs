@@ -49,11 +49,13 @@ namespace XPTOOrcamentos.Controllers
                 }
                 else
                 {
+                    TempData["msg"] = BaseModel.RetornaErro();
                     return NotFound();
                 }
             }
             else
             {
+                TempData["msg"] = BaseModel.RetornaErro();
                 return NotFound();
             }
         }
@@ -104,12 +106,14 @@ namespace XPTOOrcamentos.Controllers
         {
             if (id == null)
             {
+                TempData["msg"] = BaseModel.RetornaErro();
                 return NotFound();
             }
 
             var prestadorServico = await _context.PrestadoresServico.FindAsync(id);
             if (prestadorServico == null)
             {
+                TempData["msg"] = BaseModel.RetornaErro();
                 return NotFound();
             }
             return View(prestadorServico);
@@ -139,7 +143,7 @@ namespace XPTOOrcamentos.Controllers
                     }
                     catch (DbUpdateConcurrencyException)
                     {
-                        TempData["msg"] = "<script>alert('Houve um problema, entre em contato com o suporte!');</script>";
+                        TempData["msg"] = BaseModel.RetornaErro();
                         if (!PrestadorServicoExists(prestadorServico.ID))
                         {
                             return NotFound();
@@ -165,6 +169,7 @@ namespace XPTOOrcamentos.Controllers
         {
             if (id == null)
             {
+                TempData["msg"] = BaseModel.RetornaErro();
                 return NotFound();
             }
 
@@ -172,6 +177,7 @@ namespace XPTOOrcamentos.Controllers
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (prestadorServico == null)
             {
+                TempData["msg"] = BaseModel.RetornaErro();
                 return NotFound();
             }
 

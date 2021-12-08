@@ -120,12 +120,14 @@ namespace XPTOOrcamentos.Controllers
         {
             if (id == null)
             {
+                TempData["msg"] = BaseModel.RetornaErro();
                 return NotFound();
             }
 
             var cliente = await _context.Clientes.FindAsync(id);
             if (cliente == null)
             {
+                TempData["msg"] = BaseModel.RetornaErro();
                 return NotFound();
             }
             return View(cliente);
@@ -140,6 +142,7 @@ namespace XPTOOrcamentos.Controllers
         {
             if (id != cliente.ID)
             {
+                TempData["msg"] = BaseModel.RetornaErro();
                 return NotFound();
             }
 
@@ -155,6 +158,7 @@ namespace XPTOOrcamentos.Controllers
                 {
                     if (!ClienteExists(cliente.ID))
                     {
+                        TempData["msg"] = BaseModel.RetornaErro();
                         return NotFound();
                     }
                     else
@@ -172,6 +176,7 @@ namespace XPTOOrcamentos.Controllers
         {
             if (id == null)
             {
+                TempData["msg"] = BaseModel.RetornaErro();
                 return NotFound();
             }
 
@@ -179,6 +184,7 @@ namespace XPTOOrcamentos.Controllers
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (cliente == null)
             {
+                TempData["msg"] = BaseModel.RetornaErro();
                 return NotFound();
             }
 
@@ -193,6 +199,7 @@ namespace XPTOOrcamentos.Controllers
             var cliente = await _context.Clientes.FindAsync(id);
             _context.Clientes.Remove(cliente);
             await _context.SaveChangesAsync();
+            TempData["msg"] = "<script>alert('Cliente excluído!');</script>";
             return RedirectToAction(nameof(Index));
         }
 

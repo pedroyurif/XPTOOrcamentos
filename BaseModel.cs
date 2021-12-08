@@ -97,5 +97,9 @@ namespace XPTOOrcamentos
 
             return cnpj.EndsWith(digito);
         }
+        public static string RetornaErro()
+        {
+            return "<script>alert('Houve um problema, entre em contato com o suporte!');</script>";
+        }
     }
 }
