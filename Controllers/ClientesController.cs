@@ -90,12 +90,20 @@ namespace XPTOOrcamentos.Controllers
         {
             if (ModelState.IsValid)
             {
-                cliente.Ativo = true;
-                _context.Add(cliente);
-                await _context.SaveChangesAsync();
-                TempData["msg"] = "<script>alert('Cliente criado!');</script>";
+                if(!_context.Clientes.Any(w => w.CNPJ == cliente.CNPJ))
+                {
+                    cliente.Ativo = true;
+                    _context.Add(cliente);
+                    await _context.SaveChangesAsync();
+                    TempData["msg"] = "<script>alert('Cliente criado!');</script>";
 
-                return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    TempData["msg"] = "<script>alert('Já possui um cliente com este CNPJ!');</script>";
+                    return RedirectToAction(nameof(Index));
+                }
             }
             return View(cliente);
         }
