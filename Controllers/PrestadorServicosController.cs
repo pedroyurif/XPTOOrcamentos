@@ -49,14 +49,15 @@ namespace XPTOOrcamentos.Controllers
                 }
                 else
                 {
-                    TempData["msg"] = BaseModel.RetornaErro();
-                    return NotFound();
+                    TempData["msg"] = BaseModel.RetornaErro(); 
+                    return RedirectToAction(nameof(Index));
+
                 }
             }
             else
             {
                 TempData["msg"] = BaseModel.RetornaErro();
-                return NotFound();
+                return RedirectToAction(nameof(Index));
             }
         }
 
@@ -107,14 +108,14 @@ namespace XPTOOrcamentos.Controllers
             if (id == null)
             {
                 TempData["msg"] = BaseModel.RetornaErro();
-                return NotFound();
+                return RedirectToAction(nameof(Index));
             }
 
             var prestadorServico = await _context.PrestadoresServico.FindAsync(id);
             if (prestadorServico == null)
             {
                 TempData["msg"] = BaseModel.RetornaErro();
-                return NotFound();
+                return RedirectToAction(nameof(Index));
             }
             return View(prestadorServico);
         }
@@ -128,7 +129,8 @@ namespace XPTOOrcamentos.Controllers
         {
             if (id != prestadorServico.ID)
             {
-                return NotFound();
+                TempData["msg"] = BaseModel.RetornaErro();
+                return RedirectToAction(nameof(Index));
             }
             if (BaseModel.IsValid(prestadorServico.CPF))
             {
@@ -139,14 +141,13 @@ namespace XPTOOrcamentos.Controllers
                         _context.Update(prestadorServico);
                         await _context.SaveChangesAsync();
                         TempData["msg"] = "<script>alert('Cadastro alterado!');</script>";
-
                     }
                     catch (DbUpdateConcurrencyException)
                     {
                         TempData["msg"] = BaseModel.RetornaErro();
                         if (!PrestadorServicoExists(prestadorServico.ID))
                         {
-                            return NotFound();
+                            return RedirectToAction(nameof(Index));
                         }
                         else
                         {
@@ -170,7 +171,7 @@ namespace XPTOOrcamentos.Controllers
             if (id == null)
             {
                 TempData["msg"] = BaseModel.RetornaErro();
-                return NotFound();
+                return RedirectToAction(nameof(Index));
             }
 
             var prestadorServico = await _context.PrestadoresServico
@@ -178,7 +179,7 @@ namespace XPTOOrcamentos.Controllers
             if (prestadorServico == null)
             {
                 TempData["msg"] = BaseModel.RetornaErro();
-                return NotFound();
+                return RedirectToAction(nameof(Index));
             }
 
             return View(prestadorServico);

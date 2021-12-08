@@ -49,12 +49,13 @@ namespace XPTOOrcamentos.Controllers
                 }
                 else
                 {
-                    return NotFound();
+                    TempData["msg"] = BaseModel.RetornaErro();
+                    return RedirectToAction(nameof(Index));
                 }
             }
             else
             {
-                return NotFound();
+                return RedirectToAction(nameof(Index));
             }
         }
         // GET: Clientes/Details/5
@@ -62,14 +63,16 @@ namespace XPTOOrcamentos.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                TempData["msg"] = BaseModel.RetornaErro();
+                return RedirectToAction(nameof(Index));
             }
 
             var cliente = await _context.Clientes
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (cliente == null)
             {
-                return NotFound();
+                TempData["msg"] = BaseModel.RetornaErro();
+                return RedirectToAction(nameof(Index));
             }
 
             return View(cliente);
@@ -121,14 +124,15 @@ namespace XPTOOrcamentos.Controllers
             if (id == null)
             {
                 TempData["msg"] = BaseModel.RetornaErro();
-                return NotFound();
+                return RedirectToAction(nameof(Index));
             }
 
             var cliente = await _context.Clientes.FindAsync(id);
             if (cliente == null)
             {
                 TempData["msg"] = BaseModel.RetornaErro();
-                return NotFound();
+                return RedirectToAction(nameof(Index));
+
             }
             return View(cliente);
         }
@@ -143,7 +147,7 @@ namespace XPTOOrcamentos.Controllers
             if (id != cliente.ID)
             {
                 TempData["msg"] = BaseModel.RetornaErro();
-                return NotFound();
+                return RedirectToAction(nameof(Index));
             }
 
             if (ModelState.IsValid)
@@ -159,7 +163,7 @@ namespace XPTOOrcamentos.Controllers
                     if (!ClienteExists(cliente.ID))
                     {
                         TempData["msg"] = BaseModel.RetornaErro();
-                        return NotFound();
+                        return RedirectToAction(nameof(Index));
                     }
                     else
                     {
@@ -177,7 +181,7 @@ namespace XPTOOrcamentos.Controllers
             if (id == null)
             {
                 TempData["msg"] = BaseModel.RetornaErro();
-                return NotFound();
+                return RedirectToAction(nameof(Index));
             }
 
             var cliente = await _context.Clientes
@@ -185,7 +189,7 @@ namespace XPTOOrcamentos.Controllers
             if (cliente == null)
             {
                 TempData["msg"] = BaseModel.RetornaErro();
-                return NotFound();
+                return RedirectToAction(nameof(Index));
             }
 
             return View(cliente);

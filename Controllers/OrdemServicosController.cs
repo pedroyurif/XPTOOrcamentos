@@ -32,7 +32,7 @@ namespace XPTOOrcamentos.Controllers
             if (id == null)
             {
                 TempData["msg"] = BaseModel.RetornaErro();
-                return NotFound();
+                return RedirectToAction(nameof(Index));
             }
 
             var ordemServico = await _context.OrdensServico
@@ -41,7 +41,8 @@ namespace XPTOOrcamentos.Controllers
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (ordemServico == null)
             {
-                return NotFound();
+                TempData["msg"] = BaseModel.RetornaErro();
+                return RedirectToAction(nameof(Index));
             }
 
             return View(ordemServico);
@@ -81,14 +82,14 @@ namespace XPTOOrcamentos.Controllers
             if (id == null)
             {
                 TempData["msg"] = BaseModel.RetornaErro();
-                return NotFound();
+                return RedirectToAction(nameof(Index));
             }
 
             var ordemServico = await _context.OrdensServico.FindAsync(id);
             if (ordemServico == null)
             {
                 TempData["msg"] = BaseModel.RetornaErro();
-                return NotFound();
+                return RedirectToAction(nameof(Index));
             }
             ViewData["ClienteID"] = new SelectList(_context.Clientes.Where(w => w.Ativo), "ID", "Nome", ordemServico.ClienteID);
             ViewData["PrestadorID"] = new SelectList(_context.PrestadoresServico.Where(w => w.Ativo), "ID", "Nome", ordemServico.PrestadorID);
@@ -105,7 +106,7 @@ namespace XPTOOrcamentos.Controllers
             if (id != ordemServico.ID)
             {
                 TempData["msg"] = BaseModel.RetornaErro();
-                return NotFound();
+                return RedirectToAction(nameof(Index));
             }
 
             if (ModelState.IsValid)
@@ -122,7 +123,7 @@ namespace XPTOOrcamentos.Controllers
                     if (!OrdemServicoExists(ordemServico.ID))
                     {
                         TempData["msg"] = BaseModel.RetornaErro();
-                        return NotFound();
+                        return RedirectToAction(nameof(Index));
                     }
                     else
                     {
@@ -142,7 +143,7 @@ namespace XPTOOrcamentos.Controllers
             if (id == null)
             {
                 TempData["msg"] = BaseModel.RetornaErro();
-                return NotFound();
+                return RedirectToAction(nameof(Index));
             }
 
             var ordemServico = await _context.OrdensServico
@@ -152,7 +153,7 @@ namespace XPTOOrcamentos.Controllers
             if (ordemServico == null)
             {
                 TempData["msg"] = BaseModel.RetornaErro();
-                return NotFound();
+                return RedirectToAction(nameof(Index));
             }
 
             return View(ordemServico);
